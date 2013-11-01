@@ -2,7 +2,6 @@
 
 import sys, getopt,itertools
 from operator import itemgetter
-from itertools import combinations
 
 def main(argv):
     inputfile = ''
