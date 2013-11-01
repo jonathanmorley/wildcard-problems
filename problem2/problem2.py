@@ -24,9 +24,13 @@ def main(argv):
         generation = [int(x) for x in generation[1:-1].split(',')]
         overhead = [int(x) for x in overhead[1:-1].split(',')]
         cards = [x for x in zip(generation, overhead)]
-        print(time(cards))
-        combos = combinations(cards, 9)
-        print(min([time(combo) for combo in combos]))
+        cards = sorted(cards, key=itemgetter(0))
+        cards = sorted(cards, key=itemgetter(1))
+        for x in range(len(cards)):
+            print(x, time(cards[0:x]))
+        
+        
+        
 def time(cards):
     gentime = sum([x for x,_ in cards])
     overheadtime = sum([x for _,x in cards]) * (len(cards) - 1)
