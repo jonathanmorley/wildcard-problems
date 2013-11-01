@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import sys, getopt,itertools
+from itertools import permutations,chain,repeat,islice
 
 def main(argv):
     inputfile = ''
@@ -18,11 +19,14 @@ def main(argv):
             inputfile = arg
     
     with open(inputfile) as f:
-        rows = [line.rstrip() for line in list(f)]
-        count = len([row for row in rows if row.count('*') >= 5])
-        columns = [''.join(list(i)) for i in itertools.zip_longest(*rows, fillvalue='X')]
-        count += len([column for column in columns if column.count('*') >= 5])
-        print(count)
+        rows = [row.rstrip() for row in list(f)]
+        columns = [''.join(list(column)) for column in zip(*rows)]
+        validlines = [line.count('*') for line in rows+columns if line.count('*') >= 5]
+        perms = [sum(1 for _ in permutations(range(spaces), 5)) for spaces in validlines]
+        print(perms)
+        print(sum(perms))
+        #print(*validlines, sep='\n')
+        #print(len(validlines))
 
 if __name__ == "__main__":
     main(sys.argv[1:])
