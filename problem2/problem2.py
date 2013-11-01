@@ -6,7 +6,7 @@ from itertools import combinations
 
 def main(argv):
     inputfile = ''
-    helptext = 'test.py -i <inputfile>'
+    helptext = 'problem2.py -i <inputfile>'
     try:
         opts, args = getopt.getopt(argv,"hi:",["ifile="])
     except getopt.GetoptError:
@@ -23,13 +23,14 @@ def main(argv):
         generation, overhead, budget = [x.rstrip() for x in list(f)]
         generation = [int(x) for x in generation[1:-1].split(',')]
         overhead = [int(x) for x in overhead[1:-1].split(',')]
+        budget = int(budget)
         cards = [x for x in zip(generation, overhead)]
         cards = sorted(cards, key=itemgetter(0))
         cards = sorted(cards, key=itemgetter(1))
         for x in range(len(cards)):
-            print(x, time(cards[0:x]))
-        
-        
+            if time(cards[0:x]) > budget:
+                print(x-1)
+                break
         
 def time(cards):
     gentime = sum([x for x,_ in cards])
